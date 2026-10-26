@@ -185,6 +185,73 @@ public class Etablissement {
         return texte.length() == 0 ? "Aucun dépôt pour cette référence sur cette période." : texte.toString();
     }
 
+    public String listerArticlesDeposes(LocalDate debut, LocalDate fin) {
+        if (debut == null || fin == null || debut.isAfter(fin)) throw new IllegalArgumentException("Période invalide.");
+        long[] quantites = new long[nbArticles];
+        for (int i = 0; i < nbDepots; i++) {
+            BonDepot bon = depots[i];
+            if (!bon.getDateEmission().isBefore(debut) && !bon.getDateEmission().isAfter(fin)) {
+                for (LigneDepot ligne : bon.getLignes()) {
+                    for (int j = 0; j < nbArticles; j++) {
+                        if (articles[j].getNumero().equals(ligne.getNumero())) {
+                            quantites[j] += ligne.getNbExemplaires();
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        StringBuilder texte = new StringBuilder();
+        for (int i = 0; i < nbArticles; i++) {
+            if (quantites[i] > 0) {
+                texte.append(articles[i].getNumero()).append(" | ").append(articles[i].getDescription())
+                        .append(" | quantité déposée : ").append(quantites[i]).append(System.lineSeparator());
+            }
+        }
+        return texte.length() == 0 ? "Aucun article déposé sur cette période." : texte.toString();
+    }
+
+    public String listerParType(int type) {
+        if (type < 1 || type > 3) throw new IllegalArgumentException("Type invalide : 1 Livre, 2 Manuel, 3 Magazine.");
+        StringBuilder texte = new StringBuilder();
+        for (int i = 0; i < nbArticles; i++) {
+            Article article = articles[i];
+            if ((type == 1 && article instanceof Livre && !(article instanceof Manuel))
+                    || (type == 2 && article instanceof Manuel)
+                    || (type == 3 && article instanceof Magazine)) {
+                texte.append(article).append(System.lineSeparator());
+            }
+        }
+        return texte.length() == 0 ? "Aucun article de ce type." : texte.toString();
+    }
+
+    public String rechercherParMotCle(String motCle) {
+        String recherche = Article.verifierTexte(motCle, "Mot-clé").toLowerCase(Locale.ROOT);
+        StringBuilder texte = new StringBuilder();
+        for (int i = 0; i < nbArticles; i++) {
+            if (articles[i].getDescription().toLowerCase(Locale.ROOT).contains(recherche)) {
+                texte.append(articles[i]).append(System.lineSeparator());
+            }
+        }
+        return texte.length() == 0 ? "Aucun article correspondant à ce mot-clé." : texte.toString();
+    }
+
+    public String listerParPrix(double minimum, double maximum) {
+        if (!Double.isFinite(minimum) || !Double.isFinite(maximum) || minimum < 0 || minimum > maximum) {
+            throw new IllegalArgumentException("Prix invalides : 0 <= minimum <= maximum.");
+        }
+        StringBuilder texte = new StringBuilder();
+        LocalDate aujourdHui = LocalDate.now();
+        for (int i = 0; i < nbArticles; i++) {
+            double prixActuel = articles[i].calculerPrix(aujourdHui);
+            if (prixActuel >= minimum && prixActuel <= maximum) {
+                texte.append(articles[i]).append(" | prix actuel : ")
+                        .append(String.format(Locale.FRANCE, "%.2f EUR", prixActuel)).append(System.lineSeparator());
+            }
+        }
+        return texte.length() == 0 ? "Aucun article dans cette fourchette de prix." : texte.toString();
+    }
+
     public void versFichierArticles(String fichier) throws IOException {
         try (FileWriter sortie = new FileWriter(fichier)) {
             for (int i = 0; i < nbArticles; i++) sortie.write(articles[i].versFichier() + System.lineSeparator());

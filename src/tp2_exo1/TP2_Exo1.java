@@ -38,7 +38,7 @@ public class TP2_Exo1 {
         while (!terminer) {
             afficherMenu();
             try {
-                int choix = entier("Votre choix : ", 0, 8);
+                int choix = entier("Votre choix : ", 0, 12);
                 switch (choix) {
                     case 1:
                         System.out.println(boutique.lister());
@@ -73,6 +73,23 @@ public class TP2_Exo1 {
                     case 8:
                         sauvegarder(boutique);
                         break;
+                    case 9:
+                        LocalDate debutDepots = date("Date de début (AAAA-MM-JJ) : ");
+                        LocalDate finDepots = date("Date de fin (AAAA-MM-JJ) : ");
+                        System.out.println(boutique.listerArticlesDeposes(debutDepots, finDepots));
+                        break;
+                    case 10:
+                        int type = entier("Type : 1 Livre, 2 Manuel, 3 Magazine : ", 1, 3);
+                        System.out.println(boutique.listerParType(type));
+                        break;
+                    case 11:
+                        System.out.println(boutique.rechercherParMotCle(texte("Mot-clé dans la description : ")));
+                        break;
+                    case 12:
+                        double minimum = prix("Prix minimum en euros : ");
+                        double maximum = prix("Prix maximum en euros : ");
+                        System.out.println(boutique.listerParPrix(minimum, maximum));
+                        break;
                     case 0:
                         sauvegarder(boutique);
                         terminer = true;
@@ -104,6 +121,10 @@ public class TP2_Exo1 {
         System.out.println("6. Lister les dépôts d'un article sur une période");
         System.out.println("7. Afficher tout l'établissement");
         System.out.println("8. Sauvegarder");
+        System.out.println("9. Rechercher les articles déposés sur une période");
+        System.out.println("10. Afficher les articles par type");
+        System.out.println("11. Rechercher un article par mot-clé");
+        System.out.println("12. Rechercher les articles par fourchette de prix");
         System.out.println("0. Sauvegarder et quitter");
     }
 
