@@ -8,19 +8,20 @@
 
 ## Fonctionnalités
 
-- Gérer les livres, les manuels scolaires et les magazines.
-- Afficher les articles par stock croissant.
-- Enregistrer les dépôts et retirer les exemplaires vendus.
-- Rechercher un article par son ISBN ou son ISSN.
-- Rechercher les articles déposés sur une période, avec les quantités cumulées par référence (option 9).
-- Filtrer les articles par type : livre, manuel ou magazine (option 10).
-- Rechercher un mot-clé dans les descriptions, sans distinction de majuscules/minuscules (option 11).
-- Filtrer les articles par prix actuel, réductions comprises (option 12).
-- Consulter les dépôts d’un client ou d’un article sur une période.
-- Sauvegarder et charger les articles et les dépôts dans des fichiers texte.
+1. Lister les articles par stock croissant : Permet d'avoir une vue d'ensemble des stocks actuels, du plus faible au plus élevé.
+2. Enregistrer un dépôt : Ajout de stock pour des articles nouveaux (création de fiche) ou déjà existants.
+3. Retirer des exemplaires vendus : Mise à jour du stock après une vente.
+4. Rechercher un article : Recherche rapide via le numéro ISBN (13 chiffres) ou ISSN (8 chiffres).
+5. Lister les dépôts d'un client : Historique des dépôts retrouvés grâce au numéro de téléphone du déposant.
+6. Lister les dépôts d'un article sur une période : Permet de cibler les dépôts d'une référence précise entre deux dates.
+7. Afficher tout l'établissement : Affiche la totalité du catalogue et l'historique complet des dépôts.
+8. Sauvegarder : Enregistre l'état actuel dans des fichiers texte (articles.txt et depots.txt). (Note : le chargement est automatique au lancement).
+0. Sauvegarder et quitter : Quitte le programme en sauvegardant les données en toute sécurité.
 
-Les bornes des périodes et des prix sont incluses. Le filtre « Livre » exclut les manuels,
-qui possèdent leur propre catégorie. Les recherches ne modifient pas les stocks.
+9. Rechercher les articles déposés sur une période : Calcule et affiche les quantités cumulées déposées par référence entre deux dates données.
+10. Afficher les articles par type : Permet de filtrer le catalogue pour n'afficher que les Livres, les Manuels, ou les Magazines.
+11. Rechercher un article par mot-clé : Recherche un terme spécifique dans la description des articles (sans distinction de majuscules/minuscules).
+12. Rechercher les articles par fourchette de prix : Filtre le catalogue en fonction du prix actuel, en prenant en compte les réductions appliquées (ex: réductions périodiques sur les magazines).
 
 ## Vérification des recherches
 
